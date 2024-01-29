@@ -12,6 +12,20 @@ export const getAll = async (req, resp) => {
         });
     }
 };
+export const getTags = async (req, resp) => {
+    try {
+        const posts = await PostModels.find().limit(5).exec();
+
+        const tags = posts.map((obj) => obj.tags.flat().slice(0, 5));
+
+        resp.json(tags);
+    } catch (e) {
+        console.log(e);
+        resp.status(500).json({
+            message: "Не удалось получить теги",
+        });
+    }
+};
 
 export const getOne = async (req, resp) => {
     try {
